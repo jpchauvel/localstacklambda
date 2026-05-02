@@ -18,6 +18,8 @@ htmlcov/
 # Terraform
 terraform/.terraform/
 terraform/*.tfstate*
+terraform/modules/*/.terraform/
+terraform/modules/*/.terraform.lock.hcl
 
 # Sisyphus
 .sisyphus/evidence/
