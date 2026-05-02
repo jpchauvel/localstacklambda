@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pubsub"
+version = "0.1.0"
+description = "LocalStack Lambda pub/sub event system"
+requires-python = ">=3.14"
+dependencies = [
+    "boto3",
+    "pydantic>=2",
+    "redis",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "moto[events]>=5",
+    "fakeredis",
+    "httpx",
+    "tenacity",
+    "pytest-timeout",
+    "pre-commit",
+    "pip-audit",
+    "bandit",
+    "mypy",
+    "ruff",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+markers = [
+    "unit: unit tests",
+    "integration: integration tests",
+    "e2e: end-to-end tests",
+]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 78
+target-version = "py313"
+extend-exclude = [
+    ".sisyphus",
+    "terraform/.terraform",
+    "terraform/modules/lambda/build",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "W", "UP"]
+ignore = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.mypy]
+python_version = "3.14"
+strict = false
+ignore_missing_imports = true
+files = ["src"]
+
+[tool.bandit]
+exclude_dirs = ["tests", ".sisyphus", "terraform"]
