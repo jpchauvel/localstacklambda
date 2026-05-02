@@ -8,8 +8,8 @@ import redis
 def get_redis_client(
     host: str | None = None, port: int | None = None
 ) -> redis.Redis:
-    resolved_host: str = host or os.environ.get("REDIS_HOST", "localhost")
-    resolved_port: int = port or int(os.environ.get("REDIS_PORT", "6379"))
+    resolved_host: str = host or os.environ.get("REDIS_HOST") or "localhost"
+    resolved_port: int = port or int(os.environ.get("REDIS_PORT") or "6379")
     return redis.Redis(
         host=resolved_host,
         port=resolved_port,
